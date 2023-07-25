@@ -33,6 +33,8 @@ const Teamsetting = ({ loginUser }) => {
   const [teamSearchInput, setTeamSearchInput] = useState("");
   const [form] = Form.useForm();
   const [searchValues, setSearchValues] = useState([]);
+  const pageSize = 6;
+  const [currentPage, setCurrentPage] = useState(1);
 
   // get Data from the API
   useEffect(() => {
@@ -90,6 +92,11 @@ const Teamsetting = ({ loginUser }) => {
     );
 
     setsearchteamData(filteredTeams);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    // Perform any other actions when the page changes
   };
 
   // Function to handle the form submission when the user selects a team for the selected users.
@@ -201,7 +208,11 @@ const Teamsetting = ({ loginUser }) => {
       title: "番号",
       dataIndex: "id",
       key: "id",
-      render: (_, record) => <Checkbox onChange={(e) => onChange(e, record)} />,
+      render: (_, record, index) => (
+        <Checkbox onChange={(e) => onChange(e, record, index)}>
+          {index + 1 + (currentPage - 1) * pageSize}
+        </Checkbox>
+      ),
     },
     {
       title: "チーム名",
@@ -277,7 +288,10 @@ const Teamsetting = ({ loginUser }) => {
               dataSource={combinedTeamData}
               columns={columns}
               rowKey="id"
-              pagination={paginationConfig}
+              pagination={{
+                pageSize,
+                onChange: handlePageChange,
+              }}
             />
             <Form.Item style={{ textAlign: "center" }}>
               <Button
