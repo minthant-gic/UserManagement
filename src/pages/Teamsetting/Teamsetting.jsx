@@ -303,10 +303,10 @@ const Teamsetting = ({ loginUser }) => {
               </Button>
             </Form.Item>
           </Modal>
+          <div  className={styles["div-color"]}>
           <Form form={form} onFinish={handleFormSubmit}>
             <Form.Item
               name="teamSelect"
-              label="チームに移動"
               className={styles["usermanagement-form-item"]}
               rules={[
                 {
@@ -315,6 +315,11 @@ const Teamsetting = ({ loginUser }) => {
                 },
               ]}
             >
+              <div>
+              <label>
+              チームに移動
+              </label>
+              </div>
               <Select
                 style={{ width: "250px" }}
                 className={styles["usermanagement-input"]}
@@ -412,6 +417,7 @@ const Teamsetting = ({ loginUser }) => {
               </Button>
             </Form.Item>
           </Form>
+          </div>
         </div>
       </div>
     </>

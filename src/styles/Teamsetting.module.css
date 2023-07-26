@@ -18,6 +18,7 @@
   cursor: pointer;
   margin-top: 15px;
   color: #fff;
+  border: 2px solid black;
 }
 
 .teamsetting-btn:hover {
@@ -66,23 +67,47 @@
 .usermanagement-form-item {
   display: flex;
   justify-content: center;
-  margin-left: 245px;
+  margin-left: 360px;
 }
 
 .username-form-item {
   display: flex;
   justify-content: center;
-  margin-left: -75px;
+  margin-left: -100px;
+  font-weight: bold;
 }
 
 .teamsetting-label {
-  margin-left: 330px;
+  margin-left: 313.5px; 
+  font-weight: bold;
+}
+
+.div-color{
+  background-color: #d4dce4;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-top: 20px;
+}
+
+.teamsetting-btn-container{
+  padding-left: 18px;
+  padding-right: 18px;
 }
 
 /* Responsive styles */
 @media (max-width: 767px) {
   .teamsetting-label {
     margin-left: 0;
+  }
+
+  .teamsetting-btn {
+    background-color: #1677ff;
+    padding: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 15px;
+    color: #fff;
+    border: 2px solid black;
   }
 
   .teamsetting-box-main {
@@ -100,6 +125,7 @@
 
   .teamsetting-label {
     margin-right: 0.5rem;
+    font-weight: bold;
   }
 
   .teamsetting-user {
@@ -109,5 +135,13 @@
   .usermanagement-form-item,
   .username-form-item {
     margin-left: 0;
+    font-weight: bold;
+  }
+
+  .div-color{
+    background-color: #d4dce4;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 20px;
   }
 }
