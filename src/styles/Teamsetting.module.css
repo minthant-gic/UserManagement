@@ -18,7 +18,7 @@
   cursor: pointer;
   margin-top: 15px;
   color: #fff;
-  border: 2px solid black;
+  border: 1px solid black;
 }
 
 .teamsetting-btn:hover {
@@ -107,7 +107,7 @@
     cursor: pointer;
     margin-top: 15px;
     color: #fff;
-    border: 2px solid black;
+    border: 1px solid black;
   }
 
   .teamsetting-box-main {
