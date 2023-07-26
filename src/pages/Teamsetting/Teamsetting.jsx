@@ -315,6 +315,7 @@ const Teamsetting = ({ loginUser }) => {
                   },
                 ]}
               >
+                <div>
                 <div className={styles["selectbox-label"]}>
                   <label>チームに移動</label>
                 </div>
@@ -323,6 +324,7 @@ const Teamsetting = ({ loginUser }) => {
                   className={styles["usermanagement-input"]}
                   options={teamOptions}
                 />
+                </div>
               </Form.Item>
               <Form.Item>
                 <div className={styles["teamsetting-box-main"]}>
