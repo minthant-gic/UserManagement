@@ -261,7 +261,7 @@ const Teamsetting = ({ loginUser }) => {
                 fontSize: "20px",
                 cursor: "pointer",
                 borderRadius: "5px",
-                marginLeft: "5px",
+                marginLeft: "17px",
               }}
               onClick={handleShowModal}
             />

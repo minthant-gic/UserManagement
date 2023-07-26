@@ -214,6 +214,11 @@
   font-weight: 700;
 }
 
+.usermanagement-input{
+  border: 1px solid black;
+  border-radius: 7px;
+}
+
 .div-color{
   background-color: #d4dce4;
   padding-top: 20px;
@@ -229,7 +234,12 @@
 /* Responsive styles */
 @media (max-width: 767px) {
   .teamsetting-label {
-    margin-left: 0;
+    margin-left: -7px;
+  }
+
+  .usermanagement-input{
+    border: 1px solid black;
+    border-radius: 7px;
   }
 
   .teamsetting-btn {
@@ -266,7 +276,7 @@
 
   .user-name{
     margin-bottom: 0px;
-    margin-left: -170px;
+    margin-left: -145px;
   }
 
   .usermanagement-form-item,
