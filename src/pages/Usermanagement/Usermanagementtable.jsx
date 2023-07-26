@@ -79,6 +79,10 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
         : ""
     );
 
+    if (filteredData.length === 0) {
+      message.warning(Messages.M021);
+  }
+
     setSearchedData(filteredData);
     setIsSearchActive(true);
 
