@@ -311,7 +311,7 @@ const Teamsetting = ({ loginUser }) => {
                 rules={[
                   {
                     required: true,
-                    message: "チームを選択してください", // Error message when the select box is not chosen
+                    message: "チームを選択してください",
                   },
                 ]}
               >
