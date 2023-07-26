@@ -8,20 +8,20 @@ import { getUsers } from "../../api/api";
 import { Helmet } from "react-helmet";
 
 const Login = ({ onLogin, setLoginUsercheck }) => {
-  // ユーザーデータの状態を管理するState変数
+  // State variable to manage user data
   const [userData, setUserData] = useState([]);
-  // ユーザー名とパスワードのState変数
+  // State variables for username and password
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // ログインメッセージのState変数
+  // State variable for login message
   const [message, setMessage] = useState("");
 
-  // コンポーネントがマウントされたときにユーザーデータを取得
+  // Fetch user data when the component is mounted
   useEffect(() => {
     fetchUsers();
   }, []);
 
-  // すべてのユーザーを取得する
+  // Function to fetch all users
   const fetchUsers = async () => {
     try {
       const users = await getUsers();
@@ -31,10 +31,10 @@ const Login = ({ onLogin, setLoginUsercheck }) => {
     }
   };
 
-  // 削除されていないユーザーデータのみをフィルタリング
+  // Filter data to get only users that are not deleted
   const filteredData = userData?.filter((user) => user.del_flg === "0");
 
-  // 特定のユーザーレベルのユーザーのみをフィルタリング
+  // Filter data to get only specific user levels
   const users = filteredData?.filter(
     (user) =>
       user.user_level === "admin" ||
@@ -42,20 +42,20 @@ const Login = ({ onLogin, setLoginUsercheck }) => {
       user.user_level === "member"
   );
 
-  // react-routerのuseNavigateフックを使用して、画面遷移を行う
+  // Use react-router's useNavigate hook for screen navigation
   const navigate = useNavigate();
 
-  // ログインフォームが送信されたときのハンドラー機能
+  // Handler function when the login form is submitted
   const handleSubmit = (values) => {
     const { username } = values;
 
-    // フィルタリングされたユーザーデータから該当のユーザーを見つける
+    // Find the user from the filtered user data based on the username
     const user = users.find((user) => {
       const fullName = `${user.user_name} ${user.user_name_last}`;
       return fullName === username;
     });
 
-    // 該当のユーザーが存在し、かつ管理者またはスーパー管理者の場合
+    // If the user exists and is an admin or super admin
     if (
       user &&
       (user.user_level === "admin" || user.user_level === "super admin")
@@ -65,7 +65,7 @@ const Login = ({ onLogin, setLoginUsercheck }) => {
       setLoginUsercheck(false);
     }
 
-    // 該当のユーザーが存在し、かつ管理者、スーパー管理者、またはメンバーの場合
+    // If the user exists and is an admin, super admin, or member
     if (
       user &&
       (user.user_level === "admin" ||
@@ -74,7 +74,7 @@ const Login = ({ onLogin, setLoginUsercheck }) => {
     ) {
       setMessage("ログイン成功");
 
-      // 入力したフィールドをクリアする
+      // Clear the input fields
       setUsername("");
       setPassword("");
       onLogin(

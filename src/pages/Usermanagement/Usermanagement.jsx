@@ -15,7 +15,6 @@ const Usermanagement = ({ loginUser }) => {
   const [form] = Form.useForm();
   // Regular expression for email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
   // useState to keep track of the number of rows after filtering the user data
   const [filteredRowCount, setFilteredRowCount] = useState(0);
 
@@ -161,9 +160,6 @@ const Usermanagement = ({ loginUser }) => {
             </Form.Item>
           </Form>
         </div>
-        <p className={styles["row-count"]} style={{ color: "green" }}>
-          Total: {filteredRowCount} rows
-        </p>
         <div className={styles["usermanagement-table-main"]}>
           <Usermanagementtable
             data={userData}
