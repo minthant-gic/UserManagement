@@ -1,3 +1,130 @@
+.teamsetting-main {
+  margin-top: 35px;
+}
+
+.teamsetting-box {
+  border: 1px solid #000;
+  height: 400px;
+  width: 250px;
+  overflow-y: scroll;
+  background-color: white;
+}
+
+.teamsetting-btn {
+  background-color: #1677ff;
+  padding: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.teamsetting-btn:hover {
+  background-color: #1677ffcd;
+}
+
+.teamsetting-box-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.teamsetting-btn-main {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.teamsetting-search {
+  margin-left: 50px;
+  margin-top: -13px;
+}
+
+.submit-button{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-left: 80px;
+}
+
+.teamsetting-user {
+  cursor: pointer;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  user-select: none;
+}
+
+.teamsetting-user:hover {
+  background-color: #eee;
+}
+
+.teamsetting-user div {
+  margin-left: 10px;
+}
+
+.teamsetting-user.none {
+  display: none;
+}
+
+.teamsetting-user.selected {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.selectbox-label{
+  font-weight: 400;
+}
+
+.usermanagement-form-item {
+  display: flex;
+  justify-content: center;
+  padding-left: 15px;
+}
+
+.username-form-item {
+  display: flex;
+  justify-content: center;
+  margin-left: -75px;
+}
+
+.teamsetting-label {
+  margin-left: 330px;
+}
+
+/* Responsive styles */
+@media (max-width: 767px) {
+  .teamsetting-label {
+    margin-left: 0;
+  }
+
+  .teamsetting-box-main {
+    flex-direction: column;
+  }
+
+  .teamsetting-btn-main {
+    margin: 10px 0;
+  }
+
+  .teamsetting-search {
+    margin-left: 0;
+    margin-bottom: 1rem;
+  }
+
+  .teamsetting-label {
+    margin-right: 0.5rem;
+  }
+
+  .teamsetting-user {
+    margin: 0.5rem 0;
+  }
+
+  .submit-button{
+    margin-left: 20px;
+  }
+
+  .usermanagement-form-item,
+  .username-form-item {
+    margin-left: 0;
+  }
+}
 /* Teamsetting.module.css */
 
 .teamsetting-main {
@@ -9,6 +136,7 @@
   height: 400px;
   width: 250px;
   overflow-y: scroll;
+  margin-left: 6px;
 }
 
 .teamsetting-btn {
@@ -37,7 +165,7 @@
 }
 
 .teamsetting-search {
-  margin-left: 50px;
+  margin-left: 100px;
 }
 
 .teamsetting-user {
@@ -67,19 +195,23 @@
 .usermanagement-form-item {
   display: flex;
   justify-content: center;
-  margin-left: 360px;
+  margin-left: 460px;
 }
 
 .username-form-item {
-  display: flex;
   justify-content: center;
   margin-left: -100px;
-  font-weight: bold;
+}
+
+.user-name{
+  font-weight: 700;
+  margin-bottom: 387px;
+  font-size: 16px;
 }
 
 .teamsetting-label {
-  margin-left: 313.5px; 
-  font-weight: bold;
+  margin-left: 222px; 
+  font-weight: 700;
 }
 
 .div-color{
@@ -107,7 +239,7 @@
     cursor: pointer;
     margin-top: 15px;
     color: #fff;
-    border: 1px solid black;
+    border: 2px solid black;
   }
 
   .teamsetting-box-main {
@@ -119,7 +251,7 @@
   }
 
   .teamsetting-search {
-    margin-left: 0;
+    margin-left: 78px;
     margin-bottom: 1rem;
   }
 
@@ -130,6 +262,11 @@
 
   .teamsetting-user {
     margin: 0.5rem 0;
+  }
+
+  .user-name{
+    margin-bottom: 0px;
+    margin-left: -170px;
   }
 
   .usermanagement-form-item,

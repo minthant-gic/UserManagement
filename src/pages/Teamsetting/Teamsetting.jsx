@@ -303,120 +303,115 @@ const Teamsetting = ({ loginUser }) => {
               </Button>
             </Form.Item>
           </Modal>
-          <div  className={styles["div-color"]}>
-          <Form form={form} onFinish={handleFormSubmit}>
-            <Form.Item
-              name="teamSelect"
-              className={styles["usermanagement-form-item"]}
-              rules={[
-                {
-                  required: true,
-                  message: "チームを選択してください", // Error message when the select box is not chosen
-                },
-              ]}
-            >
-              <div>
-              <label>
-              チームに移動
-              </label>
-              </div>
-              <Select
-                style={{ width: "250px" }}
-                className={styles["usermanagement-input"]}
-                options={teamOptions}
-              />
-            </Form.Item>
-            <Form.Item
-              label="ユーザー名"
-              className={styles["username-form-item"]}
-            >
-              <div className={styles["teamsetting-box-main"]}>
-                <div className={styles["teamsetting-box-container"]}>
-                  <div className={styles["teamsetting-box"]}>
-                    {loading ? (
-                      <div>Loading...</div>
-                    ) : (
-                      <>
-                        {user?.map((user) => (
-                          <div
-                            onClick={() => handleClickUser(user._id)}
-                            className={`${styles["teamsetting-user"]} ${
-                              clickUsers.find(
-                                (clickedUser) => clickedUser._id === user._id
-                              )
-                                ? styles["none"]
-                                : ""
-                            } ${
-                              selectedUsers.find(
-                                (selectedUser) => selectedUser._id === user._id
-                              )
-                                ? styles["selected"]
-                                : ""
-                            }`}
-                            key={user?._id}
-                          >
-                            <div>{`${user.user_name} ${user.user_name_last}`}</div>
-                            <div>{user.email}</div>
-                          </div>
-                        ))}
-                      </>
-                    )}
-                  </div>
-                </div>
-                <div className={styles["teamsetting-btn-main"]}>
-                  <div
-                    className={styles["teamsetting-btn-container"]}
-                    onClick={handleRightClick}
-                  >
-                    <DoubleRightOutlined
-                      className={styles["teamsetting-btn"]}
-                    />
-                  </div>
-                  <div
-                    className={styles["teamsetting-btn-container"]}
-                    onClick={handleLeftClick}
-                  >
-                    <DoubleLeftOutlined className={styles["teamsetting-btn"]} />
-                  </div>
-                </div>
-                <div className={styles["teamsetting-box-container"]}>
-                  <div className={styles["teamsetting-box"]}>
-                    {clickUsers?.map((user) => (
-                      <div
-                        className={`${styles["teamsetting-user"]} ${
-                          selectedUsers.some(
-                            (selectedUser) => selectedUser._id === user._id
-                          )
-                            ? styles["selected"]
-                            : ""
-                        }`}
-                        onClick={() => handleClickUser(user._id)}
-                        key={user?._id}
-                      >
-                        <div>{`${user.user_name} ${user.user_name_last}`}</div>
-                        <div>{user.email}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </Form.Item>
-            <Form.Item
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginTop: "20px",
-              }}
-            >
-              <Button
-                type="primary"
-                htmlType="submit"
-                disabled={clickUsers.length === 0}
+          <div className={styles["div-color"]}>
+            <Form form={form} onFinish={handleFormSubmit}>
+              <Form.Item
+                name="teamSelect"
+                className={styles["usermanagement-form-item"]}
+                rules={[
+                  {
+                    required: true,
+                    message: "チームを選択してください", // Error message when the select box is not chosen
+                  },
+                ]}
               >
-                決定
-              </Button>
-            </Form.Item>
-          </Form>
+                <div className={styles["selectbox-label"]}>
+                  <label>チームに移動</label>
+                </div>
+                <Select
+                  style={{ width: "250px" }}
+                  className={styles["usermanagement-input"]}
+                  options={teamOptions}
+                />
+              </Form.Item>
+              <Form.Item>
+                <div className={styles["teamsetting-box-main"]}>
+                  <p htmlFor="teamSelect" className={styles["user-name"]}>
+                    ユーザー名 :{" "}
+                  </p>
+                  <div className={styles["teamsetting-box-container"]}>
+                    <div className={styles["teamsetting-box"]}>
+                      {loading ? (
+                        <div>Loading...</div>
+                      ) : (
+                        <>
+                          {user?.map((user) => (
+                            <div
+                              onClick={() => handleClickUser(user._id)}
+                              className={`${styles["teamsetting-user"]} ${
+                                clickUsers.find(
+                                  (clickedUser) => clickedUser._id === user._id
+                                )
+                                  ? styles["none"]
+                                  : ""
+                              } ${
+                                selectedUsers.find(
+                                  (selectedUser) =>
+                                    selectedUser._id === user._id
+                                )
+                                  ? styles["selected"]
+                                  : ""
+                              }`}
+                              key={user?._id}
+                            >
+                              <div>{`${user.user_name} ${user.user_name_last}`}</div>
+                              <div>{user.email}</div>
+                            </div>
+                          ))}
+                        </>
+                      )}
+                    </div>
+                  </div>
+                  <div className={styles["teamsetting-btn-main"]}>
+                    <div
+                      className={styles["teamsetting-btn-container"]}
+                      onClick={handleRightClick}
+                    >
+                      <DoubleRightOutlined
+                        className={styles["teamsetting-btn"]}
+                      />
+                    </div>
+                    <div
+                      className={styles["teamsetting-btn-container"]}
+                      onClick={handleLeftClick}
+                    >
+                      <DoubleLeftOutlined
+                        className={styles["teamsetting-btn"]}
+                      />
+                    </div>
+                  </div>
+                  <div className={styles["teamsetting-box-container"]}>
+                    <div className={styles["teamsetting-box"]}>
+                      {clickUsers?.map((user) => (
+                        <div
+                          className={`${styles["teamsetting-user"]} ${
+                            selectedUsers.some(
+                              (selectedUser) => selectedUser._id === user._id
+                            )
+                              ? styles["selected"]
+                              : ""
+                          }`}
+                          onClick={() => handleClickUser(user._id)}
+                          key={user?._id}
+                        >
+                          <div>{`${user.user_name} ${user.user_name_last}`}</div>
+                          <div>{user.email}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </Form.Item>
+              <Form.Item className={styles["submit-button"]}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  disabled={clickUsers.length === 0}
+                >
+                  決定
+                </Button>
+              </Form.Item>
+            </Form>
           </div>
         </div>
       </div>
