@@ -21,47 +21,61 @@ import styles from "../../styles/Usermanagementtable.module.css";
 import { Helmet } from "react-helmet";
 
 const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
-  // ステート変数の定義
+  // State variables definition
+
+  // Controls the visibility of the delete confirmation modal
   const [deleteModalShow, setDeleteModalShow] = useState(false);
+
+  // Controls the visibility of the edit user modal
   const [editModalShow, setEditModalShow] = useState(false);
+
+  // Holds the details of the selected user to edit
   const [selectedUser, setselectedUser] = useState("");
+
+  // Holds the ID of the selected user to edit or delete
   const [selectedUserId, setSelectedUserId] = useState(null);
+
+  // Form instance for user data editing
   const [form] = Form.useForm();
+
+  // Holds the text for search filtering
   const [searchText, setSearchText] = useState("");
+
+  // Indicates the column being searched for filtering
   const [searchedColumn, setSearchedColumn] = useState("");
+
+  // Ref to the search input field
   const searchInput = useRef(null);
+
+  // Regular expression to validate email format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // Indicates whether the search resulted in empty data
   const [emptySearchResults, setEmptySearchResults] = useState(false);
+
+  // Tracks the current page number for pagination
   const [currentPage, setCurrentPage] = useState(1);
+
+  // Indicates if a search is active or not
   const [isSearchActive, setIsSearchActive] = useState(false);
+
+  // Holds the filtered data based on search
   const [searchedData, setSearchedData] = useState(data);
+
+  // Counts the initial number of undeleted users
   let initialUndeletedUsersCount = 0;
   if (data) {
     initialUndeletedUsersCount = data.filter(
       (user) => user.del_flg === "0"
     ).length;
   }
+
+  // Holds the total number of filtered rows after search
   const [totalFilteredRows, setTotalFilteredRows] = useState(
     initialUndeletedUsersCount
   );
 
-  // 「検索」ボタンをクリックするか、「Enter」を押す時、検索処理
-  // const handleSearch = (selectedKeys, confirm, dataIndex) => {
-  //   confirm();
-  //   setSearchText(selectedKeys[0]);
-  //   setSearchedColumn(dataIndex);
-  //   const searchTerm = selectedKeys[0] ? selectedKeys[0].toLowerCase() : "";
-  //   const filteredData = data.filter((record) =>
-  //     record[dataIndex]
-  //       ? record[dataIndex].toString().toLowerCase().includes(searchTerm)
-  //       : ""
-  //   );
-  //   setSearchedData(filteredData);
-  //   setIsSearchActive(true);
-  //   setTotalFilteredRows(
-  //     filteredData.filter((user) => user.del_flg === "0").length
-  //   );
-  // };
+  // Perform search when the "Search" button is clicked or "Enter" is pressed
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
 
@@ -81,7 +95,7 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
 
     if (filteredData.length === 0) {
       message.warning(Messages.M021);
-  }
+    }
 
     setSearchedData(filteredData);
     setIsSearchActive(true);
@@ -93,7 +107,7 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
     setTotalFilteredRows(totalFilteredRows);
   };
 
-  // 「キャンセル」ボタンを押す時、リセット処理
+  // Reset the search field and clear any applied filters when the "Cancel" button is pressed
   const handleReset = (clearFilters) => {
     clearFilters();
     setSearchText("");
@@ -102,7 +116,7 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
     setTotalFilteredRows(initialUndeletedUsersCount);
   };
 
-  // 検索フィールドのプロパティを設定する
+  // Set properties for the search field
   const getColumnSearchProps = (dataIndex, placeholder) => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -164,7 +178,7 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
       ),
   });
 
-  // 編集処理
+  // Edit user data
   const handleEdit = async () => {
     try {
       const values = await form.validateFields();
@@ -189,7 +203,7 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
     }
   };
 
-  // ユーザー編集用のモーダルを開く処理
+  // Open the modal for editing a user's data
   const handleEditUser = async (userId) => {
     form.resetFields();
     try {
@@ -207,7 +221,7 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
     setEditModalShow(true);
   };
 
-  // ユーザー削除処理
+  // Delete a user
   const handleDelete = async (userId) => {
     try {
       const selectedUser = data.find((user) => user._id === userId);
@@ -238,33 +252,33 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
     }
   };
 
-  // ユーザー削除用のモーダルを表示する処理
+  // Show the delete modal for a user
   const deleteshowModal = (userId) => {
     setSelectedUserId(userId);
     setDeleteModalShow(true);
   };
 
-  // ユーザー編集用のモーダルを表示する処理
+  // Show the edit modal for a user
   const editshowModal = (userId) => {
     setSelectedUserId(userId);
     setEditModalShow(true);
     handleEditUser(userId);
   };
 
-  // 削除モーダルの「OK」ボタン処理
+  // "OK" button click handler for the delete modal
   const handleModalOk = () => {
     if (selectedUserId) {
       handleDelete(selectedUserId);
     }
   };
 
-  // モーダルのキャンセルボタン処理
+  // Modal cancel button click handler
   const handleModalCancel = () => {
     setDeleteModalShow(false);
     setEditModalShow(false);
   };
 
-  // 表のカラム定義
+  // Column definitions for the table
   const columns = [
     {
       title: "番号",
@@ -312,7 +326,7 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
     },
   ];
 
-  // ページネーションの変更時の処理
+  // Handle pagination changes
   const onChange = (pagination, filters, sorter) => {
     setCurrentPage(pagination.current);
     const searchTerm = searchText.toLowerCase();
@@ -326,13 +340,13 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
     );
   };
 
-  // ページング数と現在のページを設定する
+  // Pagination configuration
   const paginationConfig = {
     pageSize: 10,
     current: currentPage,
   };
 
-  // フィルターされたデータの取得
+  // Get filtered data based on 'del_flg' property
   const filteredData = data?.filter((user) => user.del_flg === "0");
 
   return (
