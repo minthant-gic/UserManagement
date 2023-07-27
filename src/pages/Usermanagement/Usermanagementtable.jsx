@@ -294,7 +294,12 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
       dataIndex: "email",
       key: "email",
       ...getColumnSearchProps("email", "メールアドレス"),
-      width: "35%",
+      width: "35%", // Set the width for the column in percentage
+    render: (_, record) => (
+      <div style={{ maxWidth: "300px", wordWrap: "break-word" }}>
+        {record.email}
+      </div>
+    ),
     },
     {
       title: () => <div style={{ textAlign: "center" }}>ユーザー権限</div>,
