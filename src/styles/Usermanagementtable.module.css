@@ -9,6 +9,15 @@
   }
 }
 
+.table {
+  max-width: 100%;
+}
+
+.usermanagement-table-container {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 .usermanagement-form-main {
   background: #eee;
   padding: 45px 300px;
@@ -31,10 +40,18 @@
 
 .usermanagement-table-main {
   margin-top: 20px;
+  max-width: 100%;
 }
 .usermanagement-form-main {
   background: #eee;
   padding: 45px 300px;
+}
+
+.ant-table-thead th,
+.ant-table-tbody td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .usermanagement-form-container {

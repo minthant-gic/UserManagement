@@ -83,7 +83,7 @@ const Usermanagement = ({ loginUser }) => {
       // Fetch the users again and reset the form fields
       fetchUsers();
       form.resetFields();
-      // window.location.reload();
+      window.location.reload();
     } catch (error) {
       message.success(Messages.M007);
       console.error("Error creating user:", error);
