@@ -20,26 +20,52 @@ import { Messages } from "../../data/message";
 import { Helmet } from "react-helmet";
 
 const Teamsetting = ({ loginUser, form }) => {
-  // ステート変数の定義
-  const [userData, setUserData] = useState([]);
-  const [teamData, setTeamData] = useState([]);
-  const [searchteamData, setsearchteamData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedUsers, setSelectedUsers] = useState([]);
-  const [clickUsers, setClickUsers] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [user, setUser] = useState([]);
-  const [teamSearchInput, setTeamSearchInput] = useState("");
-  const [searchValues, setSearchValues] = useState([]);
-  const pageSize = 6; 
-  const [currentPage, setCurrentPage] = useState(1);
+  // State variables definition
+  // State variable to hold the user data fetched from the API.
+const [userData, setUserData] = useState([]);
 
-  const [selectedTeamFromSelectBox, setSelectedTeamFromSelectBox] =
-    useState("");
+// State variable to hold the team data fetched from the API.
+const [teamData, setTeamData] = useState([]);
 
+// State variable to hold the team data filtered based on the search input in the team name search modal.
+const [searchteamData, setsearchteamData] = useState([]);
+
+// State variable to indicate if data is currently being loaded from the API.
+const [loading, setLoading] = useState(true);
+
+// State variable to store the users selected for moving to another team from the "clickUsers" box.
+const [selectedUsers, setSelectedUsers] = useState([]);
+
+// State variable to store the users selected for the current team in the "clickUsers" box.
+const [clickUsers, setClickUsers] = useState([]);
+
+// State variable to control the visibility of the team name search modal.
+const [isModalVisible, setIsModalVisible] = useState(false);
+
+// State variable to hold the user data filtered based on the selected team names in the team name search modal.
+const [user, setUser] = useState([]);
+
+// State variable to store the user's input for team name search in the team name search modal.
+const [teamSearchInput, setTeamSearchInput] = useState("");
+
+// State variable to store the selected team names in the team name search modal.
+const [searchValues, setSearchValues] = useState([]);
+
+// Constant to represent the number of users displayed per page in the team name search modal.
+const pageSize = 6;
+
+// State variable to store the current page number for pagination in the team name search modal.
+const [currentPage, setCurrentPage] = useState(1);
+
+// State variable to store the selected team name from the team select box for moving users to a different team.
+const [selectedTeamFromSelectBox, setSelectedTeamFromSelectBox] = useState("");
+
+
+    // useEffect hook to fetch users and teams data when the component mounts
   useEffect(() => {
     fetchUsers();
     return () => {
+       // Clean up the state when the component unmounts
       setUserData([]);
       setTeamData([]);
       setSelectedUsers([]);
@@ -48,6 +74,7 @@ const Teamsetting = ({ loginUser, form }) => {
     };
   }, []);
 
+  // Function to fetch users and teams data from the API
   const fetchUsers = async () => {
     try {
       setLoading(true);
@@ -64,6 +91,7 @@ const Teamsetting = ({ loginUser, form }) => {
     }
   };
 
+  // Function to handle click event on a user, either selecting or deselecting
   const handleClickUser = (userId) => {
     const clickedUser = userData.find((user) => user._id === userId);
 
@@ -84,6 +112,7 @@ const Teamsetting = ({ loginUser, form }) => {
     }
   };
 
+  // Function to handle search input for teams and filter the results
   const onSearch = (value) => {
     setTeamSearchInput(value);
     const lowerCaseSearch = value.toLowerCase();
@@ -93,6 +122,7 @@ const Teamsetting = ({ loginUser, form }) => {
     setsearchteamData(filteredTeams);
   };
 
+  // Function to handle form submission to update users' team information
   const handleFormSubmit = async (values) => {
     const newUserData = clickUsers.map((user) => ({
       ...user,
@@ -115,6 +145,7 @@ const Teamsetting = ({ loginUser, form }) => {
     setSelectedTeamFromSelectBox("");
   };
 
+  // Function to handle search form submission and filter user data based on selected teams
   const handleSearchSubmit = async (values) => {
     const selectedTeam = values.teamSelect === "なし" ? "" : values.teamSelect;
     const newSearchValue = values.teamSearchInput;
@@ -140,6 +171,7 @@ const Teamsetting = ({ loginUser, form }) => {
     setIsModalVisible(false);
   };
 
+  // Function to handle the click event on the "Right" arrow button in the teamsetting box.
   const handleRightClick = () => {
     if (!loading) {
       setClickUsers((prevUsers) => {
@@ -152,6 +184,7 @@ const Teamsetting = ({ loginUser, form }) => {
     }
   };
 
+  // Function to handle the click event on the "Left" arrow button in the teamsetting box.
   const handleLeftClick = () => {
     if (!loading) {
       setClickUsers((prevClickUsers) => {
@@ -165,6 +198,7 @@ const Teamsetting = ({ loginUser, form }) => {
     }
   };
 
+  // Function to handle checkbox change in the search modal
   const onChange = (e, record) => {
     if (e.target.checked) {
       setSearchValues((prevSearchValues) => [
@@ -178,10 +212,12 @@ const Teamsetting = ({ loginUser, form }) => {
     }
   };
 
+  // Function to handle the click event on the "Search" icon, displaying the team name search modal.
   const handleShowModal = () => {
     setIsModalVisible(true);
   };
 
+  // Table columns definition for rendering team search results
   const columns = [
     {
       title: () => <div style={{ textAlign: 'center' }}>番号</div>,
@@ -250,7 +286,7 @@ const Teamsetting = ({ loginUser, form }) => {
             onCancel={() => setIsModalVisible(false)}
             footer={null}
             centered
-            form={form} // Pass the form instance to the Modal
+            form={form}
           >
             <Form>
               <Form.Item label="チーム名">
