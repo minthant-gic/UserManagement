@@ -119,7 +119,11 @@ const [selectedTeamFromSelectBox, setSelectedTeamFromSelectBox] = useState("");
     const filteredTeams = teamData.filter((team) =>
       team.team_name.toLowerCase().includes(lowerCaseSearch)
     );
-    setsearchteamData(filteredTeams);
+    if (value === "なし") {
+      setsearchteamData([noneTeam, ...filteredTeams]);
+    } else {
+      setsearchteamData(filteredTeams);
+    }
   };
 
   // Function to handle form submission to update users' team information
@@ -140,9 +144,17 @@ const [selectedTeamFromSelectBox, setSelectedTeamFromSelectBox] = useState("");
       console.error("Error updating users:", error);
     }
     message.success(Messages.M008);
-    fetchUsers();
-    setClickUsers([]);
+
+    const updatedClickUsers = clickUsers.map((user) => ({
+      ...user,
+      team_name: selectedTeamFromSelectBox,
+    }));
+  
+    
+    setClickUsers(updatedClickUsers);
+    setSelectedUsers([]);
     setSelectedTeamFromSelectBox("");
+    
   };
 
   // Function to handle search form submission and filter user data based on selected teams
@@ -169,6 +181,10 @@ const [selectedTeamFromSelectBox, setSelectedTeamFromSelectBox] = useState("");
     setUser(filteredUserData);
     setClickUsers([]);
     setIsModalVisible(false);
+    if (filteredUserData.length === 0) {
+      message.warning(Messages.M022);
+      return;
+    }
   };
 
   // Function to handle the click event on the "Right" arrow button in the teamsetting box.

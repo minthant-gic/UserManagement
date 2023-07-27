@@ -180,6 +180,11 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
 
   // Edit user data
   const handleEdit = async () => {
+    // Validate only the email field first
+    const emailFieldError = form.getFieldError('email');
+    if (emailFieldError && emailFieldError.length > 0) {
+      return; // Stop execution if email field validation fails
+    }
     try {
       const values = await form.validateFields();
       const userData = {
