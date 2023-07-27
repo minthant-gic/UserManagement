@@ -1,4 +1,4 @@
-import React, { useState, useRef} from "react";
+import React, { useState, useRef } from "react";
 import {
   Table,
   Space,
@@ -21,61 +21,31 @@ import styles from "../../styles/Usermanagementtable.module.css";
 import { Helmet } from "react-helmet";
 
 const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
-  // State variables definition
-
-  // Controls the visibility of the delete confirmation modal
+  // ステート変数の定義
   const [deleteModalShow, setDeleteModalShow] = useState(false);
-
-  // Controls the visibility of the edit user modal
   const [editModalShow, setEditModalShow] = useState(false);
-
-  // Holds the details of the selected user to edit
   const [selectedUser, setselectedUser] = useState("");
-
-  // Holds the ID of the selected user to edit or delete
   const [selectedUserId, setSelectedUserId] = useState(null);
-
-  // Form instance for user data editing
   const [form] = Form.useForm();
-
-  // Holds the text for search filtering
   const [searchText, setSearchText] = useState("");
-
-  // Indicates the column being searched for filtering
   const [searchedColumn, setSearchedColumn] = useState("");
-
-  // Ref to the search input field
   const searchInput = useRef(null);
-
-  // Regular expression to validate email format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  // Indicates whether the search resulted in empty data
-  const [emptySearchResults, setEmptySearchResults] = useState(false);
-
-  // Tracks the current page number for pagination
   const [currentPage, setCurrentPage] = useState(1);
-
-  // Indicates if a search is active or not
   const [isSearchActive, setIsSearchActive] = useState(false);
-
-  // Holds the filtered data based on search
   const [searchedData, setSearchedData] = useState(data);
 
-  // Counts the initial number of undeleted users
   let initialUndeletedUsersCount = 0;
   if (data) {
     initialUndeletedUsersCount = data.filter(
       (user) => user.del_flg === "0"
     ).length;
   }
-
-  // Holds the total number of filtered rows after search
   const [totalFilteredRows, setTotalFilteredRows] = useState(
     initialUndeletedUsersCount
   );
 
-  // Perform search when the "Search" button is clicked or "Enter" is pressed
+  // 「検索」ボタンをクリックするか、「Enter」を押す時、検索処理
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
 
@@ -92,11 +62,9 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
         ? record[dataIndex].toString().toLowerCase().includes(searchTerm)
         : ""
     );
-
     if (filteredData.length === 0) {
       message.warning(Messages.M021);
     }
-
     setSearchedData(filteredData);
     setIsSearchActive(true);
 
@@ -107,7 +75,7 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
     setTotalFilteredRows(totalFilteredRows);
   };
 
-  // Reset the search field and clear any applied filters when the "Cancel" button is pressed
+  // 「キャンセル」ボタンを押す時、リセット処理
   const handleReset = (clearFilters) => {
     clearFilters();
     setSearchText("");
@@ -116,7 +84,7 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
     setTotalFilteredRows(initialUndeletedUsersCount);
   };
 
-  // Set properties for the search field
+  // 検索フィールドのプロパティを設定する
   const getColumnSearchProps = (dataIndex, placeholder) => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -178,15 +146,25 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
       ),
   });
 
-  // Edit user data
+  // 編集処理
   const handleEdit = async () => {
     // Validate only the email field first
     const emailFieldError = form.getFieldError('email');
     if (emailFieldError && emailFieldError.length > 0) {
       return; // Stop execution if email field validation fails
     }
+
     try {
       const values = await form.validateFields();
+      // Check if the email is unique among existing users
+      const isEmailUnique = data.every(
+        (user) => user._id === selectedUserId || user.email !== values.email
+      );
+
+      if (!isEmailUnique) {
+        message.error(Messages.M003);
+        return;
+      }
       const userData = {
         user_name: values.firstName,
         user_name_last: values.lastName,
@@ -208,7 +186,7 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
     }
   };
 
-  // Open the modal for editing a user's data
+  // ユーザー編集用のモーダルを開く処理
   const handleEditUser = async (userId) => {
     form.resetFields();
     try {
@@ -226,7 +204,7 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
     setEditModalShow(true);
   };
 
-  // Delete a user
+  // ユーザー削除処理
   const handleDelete = async (userId) => {
     try {
       const selectedUser = data.find((user) => user._id === userId);
@@ -257,64 +235,65 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
     }
   };
 
-  // Show the delete modal for a user
+  // ユーザー削除用のモーダルを表示する処理
   const deleteshowModal = (userId) => {
     setSelectedUserId(userId);
     setDeleteModalShow(true);
   };
 
-  // Show the edit modal for a user
+  // ユーザー編集用のモーダルを表示する処理
   const editshowModal = (userId) => {
     setSelectedUserId(userId);
     setEditModalShow(true);
     handleEditUser(userId);
   };
 
-  // "OK" button click handler for the delete modal
+  // 削除モーダルの「OK」ボタン処理
   const handleModalOk = () => {
     if (selectedUserId) {
       handleDelete(selectedUserId);
     }
   };
 
-  // Modal cancel button click handler
+  // モーダルのキャンセルボタン処理
   const handleModalCancel = () => {
     setDeleteModalShow(false);
     setEditModalShow(false);
   };
 
-  // Column definitions for the table
+  // テーブルのカラム定義
   const columns = [
     {
-      title: () => <div style={{ textAlign: 'center' }}>番号</div>,
+      title: () => <div style={{ textAlign: "center" }}>番号</div>,
       dataIndex: "_id",
       key: "id",
+      align: "right",
       render: (_, record, index) => {
         const pageIndex = currentPage === 1 ? 0 : (currentPage - 1) * 10;
         return pageIndex + index + 1;
       },
     },
     {
-      title: () => <div style={{ textAlign: 'center' }}>ユーザー名</div>,
+      title: () => <div style={{ textAlign: "center" }}>ユーザー名</div>,
       dataIndex: "user_name",
       key: "username",
       render: (_, record) => `${record.user_name} ${record.user_name_last}`,
     },
     {
-      title: () => <div style={{ textAlign: 'center' }}>メールアドレス</div> ,
+      title: () => <div style={{ textAlign: "center" }}>メールアドレス</div>,
       dataIndex: "email",
       key: "email",
       ...getColumnSearchProps("email", "メールアドレス"),
     },
     {
-      title: () => <div style={{ textAlign: 'center' }}>ユーザー権限</div>,
+      title: () => <div style={{ textAlign: "center" }}>ユーザー権限</div>,
       dataIndex: "user_level",
       key: "role",
       sorter: (a, b) => a.user_level.localeCompare(b.user_level),
       sortDirections: ["ascend", "descend"],
     },
     {
-      title: () => <div style={{ textAlign: 'center' }}>操作</div>,
+      title: () => <div style={{ textAlign: "center" }}>操作</div>,
       key: "action",
       render: (_, record) => (
         <Space size="middle">
@@ -331,7 +310,7 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
     },
   ];
 
-  // Handle pagination changes
+  // ページネーションの変更時の処理
   const onChange = (pagination, filters, sorter) => {
     setCurrentPage(pagination.current);
     const searchTerm = searchText.toLowerCase();
@@ -345,13 +324,13 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
     );
   };
 
-  // Pagination configuration
+  // ページング数と現在のページを設定する
   const paginationConfig = {
     pageSize: 10,
     current: currentPage,
   };
 
-  // Get filtered data based on 'del_flg' property
+  // フィルターされたデータの取得
   const filteredData = data?.filter((user) => user.del_flg === "0");
 
   return (
@@ -371,7 +350,7 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
           loading={loading}
           onChange={onChange}
           pagination={paginationConfig}
-          className={styles.table}
+          classNa00me={styles.table}
         />
       </div>
       <Modal
@@ -410,6 +389,16 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
             rules={[
               { required: true, message: Messages.M002 },
               { pattern: emailRegex, message: Messages.M004 },
+              {
+                validator: async (_, email) => {
+                  const isEmailUnique = data.every(
+                    (user) => user._id === selectedUserId || user.email !== email
+                  );
+                  if (!isEmailUnique) {
+                    throw new Error(Messages.M003);
+                  }
+                },
+              },
             ]}
           >
             <Input className={styles["usermanagement-input"]} />
