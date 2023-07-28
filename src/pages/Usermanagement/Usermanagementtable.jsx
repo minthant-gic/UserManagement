@@ -368,6 +368,7 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
           onChange={onChange}
           pagination={paginationConfig}
           className={styles.table}
+          scroll={{ x: "100%" }}
         />
       </div>
       <Modal

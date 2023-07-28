@@ -22,50 +22,50 @@ import { Helmet } from "react-helmet";
 const Teamsetting = ({ loginUser, form }) => {
   // State variables definition
   // State variable to hold the user data fetched from the API.
-const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState([]);
 
-// State variable to hold the team data fetched from the API.
-const [teamData, setTeamData] = useState([]);
+  // State variable to hold the team data fetched from the API.
+  const [teamData, setTeamData] = useState([]);
 
-// State variable to hold the team data filtered based on the search input in the team name search modal.
-const [searchteamData, setsearchteamData] = useState([]);
+  // State variable to hold the team data filtered based on the search input in the team name search modal.
+  const [searchteamData, setsearchteamData] = useState([]);
 
-// State variable to indicate if data is currently being loaded from the API.
-const [loading, setLoading] = useState(true);
+  // State variable to indicate if data is currently being loaded from the API.
+  const [loading, setLoading] = useState(true);
 
-// State variable to store the users selected for moving to another team from the "clickUsers" box.
-const [selectedUsers, setSelectedUsers] = useState([]);
+  // State variable to store the users selected for moving to another team from the "clickUsers" box.
+  const [selectedUsers, setSelectedUsers] = useState([]);
 
-// State variable to store the users selected for the current team in the "clickUsers" box.
-const [clickUsers, setClickUsers] = useState([]);
+  // State variable to store the users selected for the current team in the "clickUsers" box.
+  const [clickUsers, setClickUsers] = useState([]);
 
-// State variable to control the visibility of the team name search modal.
-const [isModalVisible, setIsModalVisible] = useState(false);
+  // State variable to control the visibility of the team name search modal.
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-// State variable to hold the user data filtered based on the selected team names in the team name search modal.
-const [user, setUser] = useState([]);
+  // State variable to hold the user data filtered based on the selected team names in the team name search modal.
+  const [user, setUser] = useState([]);
 
-// State variable to store the user's input for team name search in the team name search modal.
-const [teamSearchInput, setTeamSearchInput] = useState("");
+  // State variable to store the user's input for team name search in the team name search modal.
+  const [teamSearchInput, setTeamSearchInput] = useState("");
 
-// State variable to store the selected team names in the team name search modal.
-const [searchValues, setSearchValues] = useState([]);
+  // State variable to store the selected team names in the team name search modal.
+  const [searchValues, setSearchValues] = useState([]);
 
-// Constant to represent the number of users displayed per page in the team name search modal.
-const pageSize = 6;
+  // Constant to represent the number of users displayed per page in the team name search modal.
+  const pageSize = 6;
 
-// State variable to store the current page number for pagination in the team name search modal.
-const [currentPage, setCurrentPage] = useState(1);
+  // State variable to store the current page number for pagination in the team name search modal.
+  const [currentPage, setCurrentPage] = useState(1);
 
-// State variable to store the selected team name from the team select box for moving users to a different team.
-const [selectedTeamFromSelectBox, setSelectedTeamFromSelectBox] = useState("");
+  // State variable to store the selected team name from the team select box for moving users to a different team.
+  const [selectedTeamFromSelectBox, setSelectedTeamFromSelectBox] =
+    useState("");
 
-
-    // useEffect hook to fetch users and teams data when the component mounts
+  // useEffect hook to fetch users and teams data when the component mounts
   useEffect(() => {
     fetchUsers();
     return () => {
-       // Clean up the state when the component unmounts
+      // Clean up the state when the component unmounts
       setUserData([]);
       setTeamData([]);
       setSelectedUsers([]);
@@ -149,12 +149,10 @@ const [selectedTeamFromSelectBox, setSelectedTeamFromSelectBox] = useState("");
       ...user,
       team_name: selectedTeamFromSelectBox,
     }));
-  
-    
+
     setClickUsers(updatedClickUsers);
     setSelectedUsers([]);
     setSelectedTeamFromSelectBox("");
-    
   };
 
   // Function to handle search form submission and filter user data based on selected teams
@@ -236,7 +234,7 @@ const [selectedTeamFromSelectBox, setSelectedTeamFromSelectBox] = useState("");
   // Table columns definition for rendering team search results
   const columns = [
     {
-      title: () => <div style={{ textAlign: 'center' }}>番号</div>,
+      title: () => <div style={{ textAlign: "center" }}>番号</div>,
       dataIndex: "id",
       key: "id",
       render: (_, record, index) => (
@@ -246,7 +244,7 @@ const [selectedTeamFromSelectBox, setSelectedTeamFromSelectBox] = useState("");
       ),
     },
     {
-      title: () => <div style={{ textAlign: 'center' }}>チーム名</div>,
+      title: () => <div style={{ textAlign: "center" }}>チーム名</div>,
       dataIndex: "team_name",
       key: "team_name",
     },
@@ -348,14 +346,10 @@ const [selectedTeamFromSelectBox, setSelectedTeamFromSelectBox] = useState("");
                     style={{ width: "250px" }}
                     className={styles["usermanagement-input"]}
                     options={teamOptions}
-                    value={
-                      selectedTeamFromSelectBox
-                    } 
+                    value={selectedTeamFromSelectBox}
                     onChange={(value) => {
                       form.setFieldsValue({ teamSelect: value });
-                      setSelectedTeamFromSelectBox(
-                        value
-                      );
+                      setSelectedTeamFromSelectBox(value);
                     }}
                   />
                 </div>
@@ -444,7 +438,7 @@ const [selectedTeamFromSelectBox, setSelectedTeamFromSelectBox] = useState("");
                   htmlType="submit"
                   disabled={
                     !selectedTeamFromSelectBox || clickUsers.length === 0
-                  } 
+                  }
                 >
                   決定
                 </Button>

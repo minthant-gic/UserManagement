@@ -93,3 +93,36 @@
   margin-right: 30px;
   font-size: small;
 }
+
+
+@media screen and (max-width: 767px) {
+  .usermanagement-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .usermanagement-table-main {
+    max-width: 100%;
+  }
+
+  .table {
+    /* Set the background color of the table body to white */
+    & tbody {
+      background-color: #fff;
+    }
+  }
+
+  .table {
+    & thead {
+      font-size: 14px;
+    }
+
+    & tbody {
+      font-size: 14px;
+    }
+
+    & td,
+    & th {
+      white-space: normal;
+    }
+  }
+}
