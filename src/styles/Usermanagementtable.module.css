@@ -94,7 +94,6 @@
   font-size: small;
 }
 
-
 @media screen and (max-width: 767px) {
   .usermanagement-table-wrapper {
     overflow-x: auto;

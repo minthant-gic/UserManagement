@@ -149,12 +149,11 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
   // 編集処理
   const handleEdit = async () => {
     // Validate only the email field first
-    const emailFieldError = form.getFieldError('email');
+    const emailFieldError = form.getFieldError("email");
     if (emailFieldError && emailFieldError.length > 0) {
       return; // Stop execution if email field validation fails
     }
 
-    
     try {
       const values = await form.validateFields();
       // Check if the email is unique among existing users
@@ -295,11 +294,11 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
       key: "email",
       ...getColumnSearchProps("email", "メールアドレス"),
       width: "35%", // Set the width for the column in percentage
-    render: (_, record) => (
-      <div style={{ maxWidth: "300px", wordWrap: "break-word" }}>
-        {record.email}
-      </div>
-    ),
+      render: (_, record) => (
+        <div style={{ maxWidth: "300px", wordWrap: "break-word" }}>
+          {record.email}
+        </div>
+      ),
     },
     {
       title: () => <div style={{ textAlign: "center" }}>ユーザー権限</div>,
@@ -410,7 +409,8 @@ const Usermanagementtable = ({ data, loading, fetchUsers, loginUserid }) => {
               {
                 validator: async (_, email) => {
                   const isEmailUnique = data.every(
-                    (user) => user._id === selectedUserId || user.email !== email
+                    (user) =>
+                      user._id === selectedUserId || user.email !== email
                   );
                   if (!isEmailUnique) {
                     throw new Error(Messages.M003);
