@@ -139,16 +139,16 @@ const Usermanagement = ({ loginUser }) => {
                 className={styles["usermanagement-input"]}
                 options={[
                   {
-                    value: "admin",
-                    label: "Admin",
+                    value: "管理者",
+                    label: "管理者",
                   },
                   {
-                    value: "super admin",
-                    label: "Super Admin",
+                    value: "スーパー管理者",
+                    label: "スーパー管理者",
                   },
                   {
-                    value: "member",
-                    label: "Member",
+                    value: "メンバー",
+                    label: "メンバー",
                   },
                 ]}
               />
